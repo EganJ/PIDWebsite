@@ -11,13 +11,15 @@ function graph(destination, position, error, goal) {
             text: 'Motion Profile'
         },
         series: [{
-            name: 'Position',
+            name: 'Goal (Random between 15 and 25)',
             data: position
         }, {
-            name: 'Error (Difference)',
+            name: 'Red',
+            color: "red",
             data: error
         }, {
-            name: 'Goal',
+            name: 'Green',
+            color: "green",
             data: goal
         }],
     });
