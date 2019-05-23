@@ -37,8 +37,36 @@
     </div>
 </div>
 <div class="flexrow" id="graphs">
-    <div id="redGraph"></div>
-    <h1 class="fourth">Results</h1>
+    <div style="width:50%">
+        <h1 class="fourth">About the Simulation</h1>
+        <p>
+            This simulation demonstrates what various parts of a PID loop does, and how they interact. PID stands for Proportional Integral
+            Derivitve, and is a method of motion control or responsive systems. Each component is very complicated, and there
+            are many
+            <a href="https://en.wikipedia.org/wiki/PID_controller">sources</a> availible for in-depth information, but here is a short summary:
+        </p>
+        <ul>
+            <li>P: Proportional gain directs system output to be against and directly proportional to system error (error is
+                the difference between desired position and current position). This makes it great for moving toward the
+                target, but can overshoot. Another problem is since the output approachs zero as error aproaches zero, friction
+                or gravity can cause it to stop far away from the target (steady state error).</li>
+            <li>I: Integral gain directs the system against the integral of error since the desired position was set. This is
+                very good for decreasing steady state error, but decreases system stability (causes oscilations).</li>
+            <li>D: Derivitve gain directs the system poroprtional to the change in error, and has the effect of dampening/stabilizing
+                the system.</li>
+        </ul>
+        <p>Total system output is found by assigining specific multipliers to these values, and summing it up.</p>
+        <p>The following variables were included in the simulation: </p>
+        <ul>
+            <li>Accleration and momentum. Systems cannot stop instantly, and carry through after motor output is set to zero.
+                Similarily, it takes time for motors to accelerate.</li>
+            <li>Friction. For this simulation, there is both a constant friction (resistant to movement at any velocity) and
+                a proportional friction (resistant to movement scaling with velocity). This stabilizes the system, but contributes
+                to steady state error.</li>
+            <li>Gravity. This simulation includes gravity, or a spring or some other force, pulling the system to the left, contributing
+                to steady state error.</li>
+        </ul>
+    </div>
     <div id="greenGraph"></div>
 </div>
 <script src="https://code.highcharts.com/highcharts.js"></script>

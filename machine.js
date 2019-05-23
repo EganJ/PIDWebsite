@@ -1,5 +1,5 @@
 const add = (accumulator, currentValue) => accumulator + currentValue;
-const goalPos = 20;
+var goalPos = 20;
 const datapoints = 100;
 
 function graph(destination, position, error, goal) {
@@ -86,19 +86,15 @@ class Machine {
         var PID=p+i+d;
         var pidSign=Math.sign(PID);
         this.vel += this.kAccel *pidSign*Math.pow(Math.abs(p + i + d),1/3);
+        this.vel-=0.05;//Gravity/Steadystate error
         this.vel -= sign *this.getFriction(this.vel);
         this.pos += this.vel;
         return this.pos;
     }
     
     integrate(error){
-        //If error and the sum have the same sign, sum the two. If they crossed, reset sum.
-        if(Math.sign(error)===Math.sign(this.errorsSum)){
-           this.errorsSum+=error;   
-        }else{
-           this.errorsSum=error;   
-        }
-        return this.errorsSum
+        this.errorsSum+=error;   
+        return this.errorsSum/10;//divides by ten just to make system user-friendly
     }
     
     derive(error){
@@ -172,7 +168,7 @@ function createNumInput(min, max, val, id, classname) {
 function init() {
     //create extra dom elements
     var letters = ['p', 'i', 'd'];
-    var maxs = [5, 2, 1];
+    var maxs = [5, 1, 1];
     var mins = [0, 0, 0];
     for (var i = 0; i < letters.length; i++) {
         //create slider for both red and green
@@ -188,12 +184,12 @@ function init() {
 }
 function draw() {
     greenNext = greenMachine.next();
-    graphData.series[0].addPoint(20);
+    graphData.series[0].addPoint(goalPos);
     graphData.series[2].addPoint(greenNext);
     redNext = redMachine.next();
     graphData.series[1].addPoint(redNext);
-    greenBlock.style.marginLeft = 5 * greenNext / 2 - 2 + "vw";
-    redBlock.style.marginLeft = 5 * redNext / 2 - 2.5 + "vw";
+    greenBlock.style.marginLeft = 50 * greenNext / goalPos - 2.5 + "vw";
+    redBlock.style.marginLeft = 50 * redNext / goalPos - 2.5 + "vw";
     if (frameLimit > -1 && frame > frameLimit) {
         clearInterval(loop);
         // console.log("Done!" + frame + "-" + frameLimit);
@@ -225,6 +221,7 @@ function start() {
         rconf.push(redinput.value);
         gconf.push(greeninput.value);
     }
+    goalPos=Math.random()*10+15;
     redMachine = new Machine(rconf[0], rconf[1], rconf[2]);
     greenMachine = new Machine(gconf[0], gconf[1], gconf[2]);
     var GraphDest = document.getElementById("greenGraph");
