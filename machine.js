@@ -186,13 +186,10 @@ function init() {
 }
 function draw() {
     greenNext = greenMachine.next();
-    greenData.series[0].addPoint(20);
-    greenData.series[1].addPoint(Math.abs(20 - greenNext));
-    greenData.series[2].addPoint(greenNext);
+    graphData.series[0].addPoint(20);
+    graphData.series[2].addPoint(greenNext);
     redNext = redMachine.next();
-    redData.series[0].addPoint(20);
-    redData.series[1].addPoint(Math.abs(20 - redNext));
-    redData.series[2].addPoint(redNext);
+    graphData.series[1].addPoint(redNext);
     greenBlock.style.marginLeft = 5 * greenNext / 2 - 2 + "vw";
     redBlock.style.marginLeft = 5 * redNext / 2 - 2.5 + "vw";
     if (frameLimit > -1 && frame > frameLimit) {
@@ -228,16 +225,11 @@ function start() {
     }
     redMachine = new Machine(rconf[0], rconf[1], rconf[2]);
     greenMachine = new Machine(gconf[0], gconf[1], gconf[2]);
-    var greenGraphDest = document.getElementById("greenGraph");
-    var redGraphDest = document.getElementById("redGraph");
-    while(greenGraphDest.firstChild){
-        greenGraphDest.removeChild(greenGraphDest.firstChild);
+    var GraphDest = document.getElementById("greenGraph");
+    while(GraphDest.firstChild){
+        GraphDest.removeChild(GraphDest.firstChild);
     }
-    while(redGraphDest.firstChild){
-        redGraphDest.removeChild(redGraphDest.firstChild);
-    }
-    greenData = graph(greenGraphDest, [], [], []);
-    redData = graph(redGraphDest, [], [], []);
+    graphData = graph(GraphDest, [], [], []);
     x = 0;
     frame = 1;
     if (!paused) {
