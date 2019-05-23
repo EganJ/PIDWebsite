@@ -70,10 +70,8 @@ class Machine {
         this.pos = 0;
         this.vel = 0;
         this.goalPos = goalPos;
-        this.errors = [];
-        for (var i = 0; i < 15; i++) {
-            this.errors.push(goalPos);
-        }
+        this.errorsSum=0
+        this.lastError=goalPos;
     }
 
     /**
@@ -81,20 +79,35 @@ class Machine {
     */
     next() {
         var error = this.goalPos - this.pos;
-        this.errors.shift();
-        this.errors.push(error);
         var p = this.kP * error;
-        var i = this.kI * this.errors.reduce(add);
-        var d = this.kD * this.vel;
+        var i = this.kI * this.integrate(error);
+        var d = this.kD * this.derive(error);
         var sign = Math.sign(this.vel);
-        this.vel += this.kAccel *  Math.tanh(p + i + d);;
-        this.vel -= sign * Math.min(Math.abs(this.vel), this.getFriction(this.vel));
+        this.vel += this.kAccel *  Math.tanh(p + i + d);
+        this.vel -= sign *this.getFriction(this.vel);
         this.pos += this.vel;
         return this.pos;
     }
-
+    
+    integrate(error){
+        //If error and the sum have the same sign, sum the two. If they crossed, reset sum.
+        if(Math.sign(error)===Math.sign(this.errorsSum)){
+           this.errorsSum+=error;   
+        }else{
+           this.errorsSum=error;   
+        }
+        return this.errorsSum
+    }
+    
+    derive(error){
+        var dif=error-this.lastError;
+        this.lastError=error;
+        return dif;
+    }
+    
     getFriction(velocity) {
-        return this.kAccel / 2 + 0.1 * Math.abs(velocity);
+        var absvel=Math.abs(velocity)
+        return Math.min(Math.abs(velocity),this.kAccel / 2 + 0.1 * absvel);
     }
 }
 /**
@@ -157,8 +170,8 @@ function createNumInput(min, max, val, id, classname) {
 function init() {
     //create extra dom elements
     var letters = ['p', 'i', 'd'];
-    var maxs = [1, 0.1, 0.05];
-    var mins = [-0.5, -0.1, -0.05];
+    var maxs = [5, 2, 1];
+    var mins = [-0.5, -0.5, -0.5];
     for (var i = 0; i < letters.length; i++) {
         //create slider for both red and green
         var greenParent = document.getElementById(letters[i] + "Green");
