@@ -83,7 +83,9 @@ class Machine {
         var i = this.kI * this.integrate(error);
         var d = this.kD * this.derive(error);
         var sign = Math.sign(this.vel);
-        this.vel += this.kAccel *  Math.pow(p + i + d,1/3);
+        var PID=p+i+d;
+        var pidSign=Math.sign(PID);
+        this.vel += this.kAccel *pidSign*Math.pow(Math.abs(p + i + d),1/3);
         this.vel -= sign *this.getFriction(this.vel);
         this.pos += this.vel;
         return this.pos;
