@@ -83,7 +83,7 @@ class Machine {
         var i = this.kI * this.integrate(error);
         var d = this.kD * this.derive(error);
         var sign = Math.sign(this.vel);
-        this.vel += this.kAccel *  Math.tanh(p + i + d);
+        this.vel += this.kAccel *  Math.pow(p + i + d,1/3);
         this.vel -= sign *this.getFriction(this.vel);
         this.pos += this.vel;
         return this.pos;
@@ -107,7 +107,7 @@ class Machine {
     
     getFriction(velocity) {
         var absvel=Math.abs(velocity)
-        return Math.min(Math.abs(velocity),2*this.kAccel / 5 + 0.01 * absvel);
+        return Math.min(Math.abs(velocity),2*this.kAccel / 3 + 0.01 * absvel);
     }
 }
 /**
