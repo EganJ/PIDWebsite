@@ -1,0 +1,51 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./stylesheet.css">
+</head>
+<div id="animationWrapper">
+    <div class="red block" id="redBlock"></div>
+    <div class="green block" id="greenBlock"></div>
+</div>
+<!--Proportional-->
+<div class="flexrow" id="pControls">
+    <div class="sliderwrapper" id="pRed"></div>
+    <h1 class="fourth">Proportional</h1>
+    <div class="sliderwrapper" id="pGreen"></div>
+</div>
+<!--Integral-->
+<div class="flexrow" id="iControls">
+    <div class="sliderwrapper" id="iRed"></div>
+    <h1 class="fourth">Integral</h1>
+    <div class="sliderwrapper" id="iGreen"></div>
+</div>
+<!--Derivative-->
+<div class="flexrow" id="dControls">
+    <div class="sliderwrapper" id="dRed"></div>
+    <h1 class="fourth">Derivative</h1>
+    <div class="sliderwrapper" id="dGreen"></div>
+</div>
+<div class="flexrow">
+    <!--Start/Stop controls-->
+    <div>
+        <button id="start">Restart/New options</button>
+        <button id="pause">Pause (press k)</button>
+    </div>
+</div>
+<div class="flexrow" id="graphs">
+    <div id="redGraph"></div>
+    <h1 class="fourth">Results</h1>
+    <div id="greenGraph"></div>
+</div>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="machine.js"></script>
+</body>
+
+</html>
