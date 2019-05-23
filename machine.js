@@ -125,8 +125,8 @@ var redMachine, greenMachine;
 function getPairedSliderInput(max, min, classname, idprepend) {
     var wrapper = document.createElement("div");
     wrapper.className = "flexrow flexstretch";
-    var slider = createSlider(min, max, min, idprepend + "Slider", classname);
-    var numIn = createNumInput(min, max, min, idprepend + "Number", classname);
+    var slider = createSlider(min, max, max, idprepend + "Slider", classname);
+    var numIn = createNumInput(min, max, max, idprepend + "Number", classname);
     slider.oninput = function () {
         numIn.value = this.value;
     }

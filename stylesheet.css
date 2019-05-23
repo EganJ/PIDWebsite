@@ -38,6 +38,8 @@ b {
     width: 5vw;
     height: 5vw;
     margin: 1vw 1vw 1vw 1vw;
+    z-index: 1;
+    position: relative;
 }
 
 .slider {
