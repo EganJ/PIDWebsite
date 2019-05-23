@@ -125,8 +125,8 @@ var redMachine, greenMachine;
 function getPairedSliderInput(max, min, classname, idprepend) {
     var wrapper = document.createElement("div");
     wrapper.className = "flexrow flexstretch";
-    var slider = createSlider(min, max, (min + max) / 2, idprepend + "Slider", classname);
-    var numIn = createNumInput(min, max, (min + max) / 2, idprepend + "Number", classname);
+    var slider = createSlider(min, max, min, idprepend + "Slider", classname);
+    var numIn = createNumInput(min, max, min, idprepend + "Number", classname);
     slider.oninput = function () {
         numIn.value = this.value;
     }
@@ -171,7 +171,7 @@ function init() {
     //create extra dom elements
     var letters = ['p', 'i', 'd'];
     var maxs = [5, 2, 1];
-    var mins = [-0.5, -0.5, -0.5];
+    var mins = [0, 0, 0];
     for (var i = 0; i < letters.length; i++) {
         //create slider for both red and green
         var greenParent = document.getElementById(letters[i] + "Green");
