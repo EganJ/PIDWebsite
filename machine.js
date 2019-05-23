@@ -107,7 +107,7 @@ class Machine {
     
     getFriction(velocity) {
         var absvel=Math.abs(velocity)
-        return Math.min(Math.abs(velocity),this.kAccel / 2 + 0.1 * absvel);
+        return Math.min(Math.abs(velocity),2*this.kAccel / 5 + 0.01 * absvel);
     }
 }
 /**
